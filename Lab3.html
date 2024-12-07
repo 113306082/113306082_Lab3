@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>數字猜猜樂</title>
+    <style>
+        /* Center the content on the page */
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+        	font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        #result img {
+            max-width: 500px; /* Adjust image size as needed */
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>113306082_Lab3_Number Guessing Game</h1>
+    <div id="result"></div>
+    <script>
+        // 生成 1 到 100 的隨機數字
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attemptsLeft = 7;
+
+        while (attemptsLeft > 0) {
+            let guess = window.prompt(`猜一個 1 到 100 之間的數字。剩餘次數：${attemptsLeft}`);
+
+            // 驗證輸入是否為空
+            if (guess === null || guess.trim() === "") {
+                alert("輸入不可為空，請輸入一個數字！");
+                continue;
+            }
+
+            // 將輸入轉為數字並檢查是否有效
+            guess = Number(guess);
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                alert("無效的輸入！請輸入 1 到 100 之間的數字！");
+                continue;
+            }
+
+            // 減少剩餘次數
+            attemptsLeft--;
+
+            // 判斷結果
+            if (guess === randomNumber) {
+                alert("恭喜你！猜對了！");
+                document.getElementById("result").innerHTML = '<img src="correct.jpg" alt="正確！">';
+                break;
+            } else if (attemptsLeft === 0) {
+                alert(`遊戲結束！正確答案是 ${randomNumber}。`);
+                document.getElementById("result").innerHTML = '<img src="wrong.jpg" alt="遊戲結束">';
+            } else if (guess < randomNumber) {
+                alert(`太小了！再試一次。剩餘次數：${attemptsLeft}`);
+            } else {
+                alert(`太大了！再試一次。剩餘次數：${attemptsLeft}`);
+            }
+        }
+    </script>
+</body>
+</html>
